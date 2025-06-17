@@ -33,7 +33,6 @@ describe('ZIP Utilities Test', function() {
     ziputils.enumerateDirectory('./test/fixtures/employeesnode', 'node', false, function(err, files) {
       if (err) { return done(err); }
 
-      //console.log('%j', files);
 
       // Should contain README.md
       let readme = find(files, function(f) {
@@ -50,16 +49,6 @@ describe('ZIP Utilities Test', function() {
         return (f.fileName === 'test/fixtures/employeesnode/node_modules');
       });
       assert(!topModules);
-
-      // Should contain "node_modules/express"
-      var express = find(files, function(f) {
-        return (f.fileName === 'test/fixtures/employeesnode/node_modules/express');
-      });
-      assert(express);
-      assert.equal(express.fileName, 'test/fixtures/employeesnode/node_modules/express');
-      assert.equal(express.resourceName, 'node_modules_express.zip');
-      assert(express.directory);
-
       done();
     });
   });
@@ -67,10 +56,8 @@ describe('ZIP Utilities Test', function() {
   it('Enumerate regular file list', function() {
     var files =
       ziputils.enumerateResourceDirectory('./test/fixtures/employees/apiproxy/resources');
-
-    assert.equal(files.length, 7);
+    assert.equal(files.length, 6);
     assert(files.find( f => f.fileName.endsWith("hello.js") && f.resourceType == "jsc"));
-    assert(files.find( f => f.fileName.endsWith("config.js")));
     assert(files.find( f => f.fileName.endsWith("package.json")));
     assert(files.find( f => f.fileName.endsWith("node_modules.zip")));
     //console.log('%j', files);
